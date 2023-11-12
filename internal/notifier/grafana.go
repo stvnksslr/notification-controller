@@ -69,7 +69,8 @@ func (g *Grafana) Post(ctx context.Context, event eventv1.Event) error {
 
 	sfields := make([]string, 0, len(event.Metadata))
 	// add tag to filter on grafana
-	sfields = append(sfields, "flux", event.ReportingController)
+	sfields = append(sfields, "flux", event.ReportingController, event.InvolvedObject.Name)
+
 	for k, v := range event.Metadata {
 		sfields = append(sfields, fmt.Sprintf("%s: %s", k, v))
 	}
